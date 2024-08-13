@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+           /* background-color: black;*/
+            /*text-decoration-color: rgb(255, 255, 255);*/
+        }
+        textarea{
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow: auto;
+            white-space: pre;
+        }
+        .out{
+            height: auto;
+        }
+        #ou{
+            min-height: 200px;
+            font-size: 0.5em;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <p><a href="/home">Reset</a></p>
+    <textarea rows="20" cols="5" class="out" id="ou" readonly>{{.}}</textarea>
+</body>
+</html>

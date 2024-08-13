@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-image: url("/static/img/section-1-bg.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .form-group input:focus {
+            border-color: #3805c5;
+            outline: none;
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            width: 45%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .toggle-form a {
+            color: #3805c5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .toggle-form a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #121614;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .nav-button {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background: linear-gradient(145deg, #3805c5, #111);
+            box-shadow: 2px 2px 5px #a1adf0;
+            transition: background 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(145deg, #555, #222);
+            box-shadow: 3px 3px 10px #000;
+        }
+
+        .nav-button.active {
+            background: linear-gradient(145deg, #111, #555);
+            box-shadow: 3px 3px 10px #000;
+        }
+
+        .nav-button .tooltip {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .nav-button:hover .tooltip {
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/home" class="nav-button">Home
+            <div class="tooltip">Go to Home Page</div>
+        </a>
+        <a href="/aboutus" class="nav-button">About Us
+            <div class="tooltip">Learn more about us</div>
+        </a>
+        <a href="/aboutascii" class="nav-button">About ASCII Art
+            <div class="tooltip">What is ASCII Art?</div>
+        </a>
+        <a href="/login" class="nav-button active">Log In
+            <div class="tooltip">Access your account</div>
+        </a>
+    </div>
+
+    <div class="container">
+        <h1>Log In</h1>
+        <div id="login-form">
+            <form action="/login" method="POST" id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <div class="submit-container">
+                    <input type="submit" value="Log In">
+                </div>
+                <div class="toggle-form">
+                    <p>Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div id="signup-form" class="hidden">
+            <h2>Sign Up</h2>
+            <form action="/signup" method="POST" id="signUpForm">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="submit-container">
+                    <input type="submit" value="Sign Up">
+                </div>
+                <div class="toggle-form">
+                    <p>Already have an account? <a href="#" id="showLogin">Log In</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Form Validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            var username = document.getElementById('loginUsername').value;
+            var password = document.getElementById('loginPassword').value;
+
+            if (username === '' || password === '') {
+                alert('Please fill out all fields.');
+                e.preventDefault();
+            }
+        });
+
+        document.getElementById('signUpForm').addEventListener('submit', function(e) {
+            var username = document.getElementById('signupUsername').value;
+            var email = document.getElementById('signupEmail').value;
+            var password = document.getElementById('signupPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (username === '' || email === '' || password === '' || confirmPassword === '') {
+                alert('Please fill out all fields.');
+                e.preventDefault();
+            } else if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                e.preventDefault();
+            }
+        });
+
+        // Toggle between Sign Up and Log In
+        document.getElementById('showSignUp').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+        });
+    </script>
+</body>
+
+</html>

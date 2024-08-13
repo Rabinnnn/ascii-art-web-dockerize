@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About ASCII Art</title>
+
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-size: cover;
+            background-position: center;
+            background-color: rgb(106, 143, 72);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(82, 80, 80, 0.404);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left; /* Align text to the left */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            text-align: left;
+            margin-bottom: 1em;
+            text-indent: 2em; /* Indent paragraphs for better readability */
+        }
+
+        p:first-of-type::first-letter {
+            font-size: 3em; /* Size of the drop cap */
+            float: left;
+            margin-right: 0.1em;
+            line-height: 1;
+            font-weight: bold;
+            color: #3805c5; /* Optional: Customize drop cap color */
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #121614;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .nav-button {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background: linear-gradient(145deg, #3805c5, #111);
+            box-shadow: 2px 2px 5px #a1adf0;
+            transition: background 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(145deg, #555, #222);
+            box-shadow: 3px 3px 10px #000;
+        }
+
+        /* Active Link Styles */
+        .nav-button.active {
+            background: linear-gradient(145deg, #111, #555);
+            box-shadow: 3px 3px 10px #000;
+        }
+
+        /* Tooltip for Navbar */
+        .nav-button .tooltip {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .nav-button:hover .tooltip {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/home" class="nav-button">Home
+            <div class="tooltip">Go to Home Page</div>
+        </a>
+        <a href="/aboutus" class="nav-button">About Us
+            <div class="tooltip">Learn more about us</div>
+        </a>
+        <a href="/aboutascii" class="nav-button active">About ASCII Art
+            <div class="tooltip">What is ASCII Art?</div>
+        </a>
+      <!--  <a href="/login" class="nav-button">Log In
+            <div class="tooltip">Access your account</div>
+        </a>-->
+    </div>
+
+    <div class="container" style="font-size: 50px;height: 300px; text-align: center; color: red">500: Internal Server Error</div>
+
+    <script>
+        $(document).ready(function() {
+            // Get the current URL path
+            var path = window.location.pathname;
+
+            // Remove 'active' class from all nav buttons
+            $('.nav-button').removeClass('active');
+
+            // Add 'active' class to the current page's nav button
+            $('.nav-button[href="' + path + '"]').addClass('active');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Art Web</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <button id="navbar-toggle">&#9776;</button>
+        <div id="navbar-menu">
+            <a href="/home" class="nav-button">Home
+                <div class="tooltip">Home Page</div>
+            </a>
+            <a href="/aboutus" class="nav-button">About Us
+                <div class="tooltip">Learn more about us</div>
+            </a>
+            <a href="/aboutascii" class="nav-button">About ASCII Art
+                <div class="tooltip">What is ASCII Art?</div>
+            </a>
+        </div>
+        <button id="mode-toggle">
+            <span class="mode-icon">&#9790;</span> <!-- moon icon -->
+            <span class="tooltip">Switch to dark mode</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <h1><center>ASCII Art Web Stylize</center></h1>
+        <div class="marquee-container">
+            <marquee behavior="alternate" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+                Welcome to <b>ASCII Art Web</b>; a web app designed to output graphical art corresponding to user input.
+            </marquee>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <form id="ascii-form" action="/ascii-art" method="POST">
+                    <fieldset id="banners" class="banners">
+                        <legend>Choose a Banner</legend>
+                        <div class="radio-container">
+                            <input name="banner" type="radio" value="standard" id="standard" aria-labelledby="standard-label" checked />
+                            <label for="standard" id="standard-label">Standard
+                                <div class="tooltip">
+                                    <img src="../static/img/standard-banner.png" alt="Standard Banner">
+                                </div>
+                            </label>
+                        </div>
+                        <div class="radio-container">
+                            <input name="banner" type="radio" value="shadow" id="shadow" aria-labelledby="shadow-label" />
+                            <label for="shadow" id="shadow-label">Shadow
+                                <div class="tooltip">
+                                    <img src="../static/img/shadow-banner.png" alt="Shadow Banner">
+                                </div>
+                            </label>
+                        </div>
+                        <div class="radio-container">
+                            <input name="banner" type="radio" value="thinkertoy" id="thinkertoy" aria-labelledby="thinkertoy-label" />
+                            <label for="thinkertoy" id="thinkertoy-label">Thinkertoy
+                                <div class="tooltip">
+                                    <img src="../static/img/thinkertoy-banner.png" alt="Thinkertoy Banner">
+                                </div>
+                            </label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="inputtext">
+                        <legend>Input text</legend>
+                        <textarea id="input" name="input" class="out" aria-labelledby="input-label"></textarea>
+                    </fieldset>
+                    <div class="submit-container">
+                        <input type="submit" value="Produce Art" aria-labelledby="submit-label"/>
+                    </div>
+                </form>
+            </div>
+            <div class="column">
+                <div id="art-display" aria-live="polite" style="font-size:20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var path = window.location.pathname;
+            $('.nav-button').removeClass('active');
+            $('.nav-button[href="' + path + '"]').addClass('active');
+            $('#navbar-toggle').click(function() {
+                $('#navbar-menu').toggleClass('show');
+            });
+
+            // Theme toggle functionality
+            const modeToggle = document.getElementById('mode-toggle');
+            const body = document.body;
+            const modeIcon = document.querySelector('.mode-icon');
+            const modeTooltip = modeToggle.querySelector('.tooltip');
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme) {
+                body.classList.add(currentTheme);
+                modeIcon.innerHTML = body.classList.contains('dark-mode') ? '&#9790;' : '&#9788;';
+                modeTooltip.textContent = body.classList.contains('dark-mode') ? 'Switch to light mode' : 'Switch to dark mode';
+            }
+
+            modeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDarkMode ? 'dark-mode' : '');
+                modeIcon.innerHTML = isDarkMode ? '&#9788;' : '&#9790;';
+                modeTooltip.textContent = isDarkMode ? 'Switch to light mode' : 'Switch to dark mode';
+            });
+
+            // Form submission
+            $('#ascii-form').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                var $submitBtn = $(this).find('input[type="submit"]');
+                var $artDisplay = $('#art-display');
+
+                $submitBtn.prop('disabled', true).val('Loading...');
+                $.ajax({
+                    type: 'POST',
+                    url: '/ascii-art',
+                    data: formData,
+                    success: function(response) {
+                        $artDisplay.html(response);
+                        $submitBtn.prop('disabled', false).val('Produce Art');
+                    },
+                    error: function(xhr, status, error) {
+                     
+                        if (xhr.status === 404) {
+                            // Redirect to 404.html page
+                            window.location.href = '404.html';
+                        }else if(xhr.status === 400){
+                            window.location.href = '400.html';
+
+                        }else if(xhr.status === 500){
+                            window.location.href = '500.html'
+                        }
+                     
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

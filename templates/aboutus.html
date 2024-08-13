@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: rgb(106, 143, 72);
+            background-size: cover;
+            background-position: center;
+            color: #333;
+        }
+
+        .container {
+            background: rgba(82, 80, 80, 0.404);
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        p {
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            background-color: #333;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .nav-button {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(145deg, #555, #222);
+            box-shadow: 3px 3px 10px #000;
+        }
+
+        /* Active Link Styles */
+        .nav-button.active {
+            background: linear-gradient(145deg, #111, #555);
+            box-shadow: 3px 3px 10px #000;
+        }
+
+        /* Tooltip for Navbar */
+        .nav-button .tooltip {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .nav-button:hover .tooltip {
+            display: block;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+
+        /* table tr:nth-child(even) {
+            background-color: #f1f1f1;
+        } */
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/home" class="nav-button">Home
+            <div class="tooltip">Go to Home Page</div>
+        </a>
+        <a href="/aboutus" class="nav-button">About Us
+            <div class="tooltip">Learn more about us</div>
+        </a>
+        <a href="/aboutascii" class="nav-button">About ASCII Art
+            <div class="tooltip">What is ASCII Art?</div>
+        </a>
+        <!--<a href="/login" class="nav-button">Log In
+            <div class="tooltip">Access your account</div>
+        </a>-->
+    </div>
+
+    <div class="container">
+        <h1>About Us</h1>
+        <p style="color: #e9e8e8;">Welcome to the ASCII Art Web application. We are dedicated to providing a fun and interactive platform for creating and sharing ASCII art.</p>
+        <h1>Contributors</h1>
+        
+        <table>
+            <tr>
+                <th>NAME</th>
+                <th>github Link</th>
+            </tr>
+            <tr>
+                <td>Hezborn Shikuku</td>
+                <td><a href="https://github.com/Mania124/ascii-art-web" target="_blank">//github.com/Mania124/ascii-art-web</a></td>
+            </tr>
+            <tr>
+                <td>Otieno Ragwel Rogers</td>
+                <td><a href="https://github.com/Oragwel/ascii-art-web" target="_blank">//github.com/Oragwel/ascii-art-web</a></td>
+            </tr>
+            <tr>
+                <td>Rabin Otieno</td>
+                <td><a href="https://github.com/Rabinnnn/ascii-art-web" target="_blank">//github.com/Rabinnnn/ascii-art-web</a></td>
+            </tr>
+        </table>
+        
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Get the current URL path
+            var path = window.location.pathname;
+
+            // Remove 'active' class from all nav buttons
+            $('.nav-button').removeClass('active');
+
+            // Add 'active' class to the current page's nav button
+            $('.nav-button[href="' + path + '"]').addClass('active');
+        });
+    </script>
+</body>
+
+</html>
